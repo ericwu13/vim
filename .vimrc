@@ -1,5 +1,5 @@
 set nocompatible              " be iMproved, required
-syntax enable 
+syntax enable
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -18,7 +18,12 @@ Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'Command-T'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'rhysd/git-messenger.vim'
+Plugin 'gioele/vim-autoswap'
 " git repos on your local machine (i.e. when working on your own plugin)
 " Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
@@ -31,6 +36,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " All of your Plugins must be added before the following line
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'preservim/nerdtree'
 " Plugin 'sheerun/vim-polyglot'
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -65,19 +71,29 @@ set foldcolumn=0
 """"""""""""""
 
 "let g:monokai_oringinal=1
-"colo dracula 
+"colo dracula
 colorscheme jellybeans
 "set termguicolors
 " Mapping KB
-nnoremap <C-j> <C-w>j
-nnoremap <C-h> <C-w>h
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap [ <C-w>_
-nnoremap ] <C-w>\|
-nnoremap = <C-w>=
 nnoremap <space> za
+nnoremap  <C-l> :tabn<CR>
+nnoremap  <C-h> :tabp<CR>
+nnoremap  <C-n> :tabnew<CR>
 
+" Autoread git diff
+set autoread
+
+" fzf Mapping
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <C-p> :Files<CR>
+nnoremap <Leader>f :Rg<CR>
+nnoremap <Leader>/ :BLines<CR>
+nnoremap <Leader>' :Marks<CR>
+nnoremap <Leader>g :Commits<CR>
+nnoremap <Leader>H :Helptags<CR>
+nnoremap <Leader>hh :History<CR>
+nnoremap <Leader>h: :History:<CR>
+nnoremap <Leader>h/ :History/<CR>
 
 " Easy motion
 " let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -100,3 +116,15 @@ map <Leader>k <Plug>(easymotion-k)
 " Move to word
 map  m <Plug>(easymotion-bd-w)
 nmap m <Plug>(easymotion-overwin-w)
+
+" To enable ctags
+set tags=tags;/
+
+" Make p not yank the replaced line
+vnoremap p "_dP
+
+" Map git messenger
+nmap <C-w>m <Plug>(git-messenger)
+
+let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_enable_diagnostic_highlighting = 0
